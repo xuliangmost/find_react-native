@@ -85,6 +85,7 @@ class Message extends React.Component<Props, any> {
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <MainScreenHeader value='消息' navigation={navigation}/>
         <TouchableOpacity
+          style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
           onPress={this.alertLogin}
         >
           <Text style={Styles.btn}>
