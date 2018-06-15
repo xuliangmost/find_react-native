@@ -24,6 +24,7 @@ project.xcworkspace
 
 # Android/IntelliJ
 #
+yarn.lock
 build/
 .idea
 .gradle
