@@ -1,0 +1,6 @@
+pushd android
+rm -rf app/build
+./gradlew assembleRelease
+mv app/build/outputs/apk/app-release.apk ~/Desktop/
+pushd ~/Desktop/
+mv app-release.apk find.apk

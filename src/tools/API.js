@@ -1,0 +1,1 @@
+export const API = `http://rapapi.org/mockjsdata/34870`;
