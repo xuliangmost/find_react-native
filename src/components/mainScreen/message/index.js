@@ -95,6 +95,8 @@ class Message extends React.Component<Props, any> {
 
         <FlatList
           data={messages}
+
+
           keyExtractor={this._keyExtractor}
           extraData={this.state}
           renderItem={({item}) => (
