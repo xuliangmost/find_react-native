@@ -4,7 +4,8 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableHighlight
+  TouchableHighlight,
+  Linking
 } from 'react-native'
 import ChatHeader from "../../common/chatHeader";
 import {GiftedChat} from 'react-native-gifted-chat'
@@ -30,7 +31,7 @@ class ChatView extends React.Component<Props, any> {
       messages: [
         {
           _id: Math.round(Math.random() * 1000000),
-          text: '#awesome',
+          text: '18610816681',
           createdAt: new Date(),
           user: {
             _id: 1,
@@ -39,7 +40,7 @@ class ChatView extends React.Component<Props, any> {
         },
         {
           _id: Math.round(Math.random() * 1000000),
-          text: '我给你发了个消息',
+          text: '#aa',
           createdAt: new Date(),
           user: {
             _id: 2,
@@ -123,8 +124,6 @@ class ChatView extends React.Component<Props, any> {
         name: 'React Native',
       },
       image: image,
-      sent: true,
-      received: true,
     };
     if (!image) {
       delete message.image
@@ -159,7 +158,9 @@ class ChatView extends React.Component<Props, any> {
           onSend={() => this.onSend()}
           placeholder={'输入聊天信息'}
           renderAvatarOnTop
+          timeFormat={'H:MM'}
           label={'发送'}
+          textInputProps={{autoFocus: true}}
           onInputTextChanged={sendValue => this.setState({sendValue})}
           renderActions={this.renderActions}
           keyboardShouldPersistTaps={'never'}
@@ -168,9 +169,10 @@ class ChatView extends React.Component<Props, any> {
           }}
           parsePatterns={linkStyle => [
             {
-              pattern: /#(\w+)/,
+              // pattern: /#(\w+)/,
+              pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/,
               style: {...linkStyle, color: 'lightgreen'},
-              onPress: props => alert(`press on ${props}`),
+              onPress: props => Linking.openURL(`tel:${props}`)
             },
           ]}
         />

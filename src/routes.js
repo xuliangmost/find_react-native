@@ -8,9 +8,10 @@ import {
   View,
   Easing,
   Animated,
-  BackHandler,
-  ToastAndroid,
-  StatusBar
+  StatusBar,
+  Linking,
+  AppState,
+  Text
 } from 'react-native';
 import {createStackNavigator} from 'react-navigation'
 import MainScreen from './components/mainScreen'
@@ -90,31 +91,37 @@ class App extends Component<Props, any> {
   constructor (props) {
     super(props);
     this.state = {
-      loginState: props.loginState
+      states: ''
     };
   }
 
   componentWillReceiveProps (nextProps: Object) {
-    if (this.props.loginState !== nextProps.loginState) {
-      this.setState({loginState: nextProps.loginState})
-    }
+
   }
 
   componentDidMount () {
-    // this.backHandlers = BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid.bind(this));
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        Toast.info(`'Initial url is: ' + ${url}`, 2)
+      }
+    }).catch(err => console.error('An error occurred', err));
+    AppState.addEventListener('change', this._handleAppStateChange);
   }
 
-  onBackAndroid = (): boolean => {
-    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
-      BackHandler.exitApp();
+  componentWillUnmount () {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = (nextState) => {
+    if (nextState === 'active') {
+      this.setState({states: `${this.state.states}\n active`})
     }
-    this.lastBackPressed = Date.now();
-    ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
-    return true;
-  };
+    if (nextState === 'background') {
+      this.setState({states: `${this.state.states}\n background`})
+    }
+  }
 
   render () {
-    const {loginState} = this.state;
     return (
       <View style={styles.container}>
         <StatusBar hidden={false}/>
@@ -132,9 +139,7 @@ const styles = StyleSheet.create({
 });
 
 function mapState (state: Object) {
-  return {
-    loginState: state.loginState
-  }
+  return {}
 }
 
 export default connect(mapState)(App)
