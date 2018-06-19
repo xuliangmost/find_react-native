@@ -10,7 +10,7 @@ import {
 import ChatHeader from "../../common/chatHeader";
 import {GiftedChat} from 'react-native-gifted-chat'
 import {PickImage} from "../../../tools/pickImages";
-import {Toast} from 'antd-mobile-rn'
+// import {Toast} from 'antd-mobile-rn'
 
 type Props = {
   navigation: Object
