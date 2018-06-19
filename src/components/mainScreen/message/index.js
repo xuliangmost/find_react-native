@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   BackHandler, ToastAndroid,
+  Linking
 } from 'react-native'
 import * as React from 'react'
 import {connect} from 'react-redux'
@@ -40,6 +41,7 @@ class Message extends React.Component<Props, any> {
   };
 
   componentDidMount () {
+
     this.viewDidAppear = this.props.navigation.addListener(
       'willFocus',
       () => {
@@ -90,6 +92,22 @@ class Message extends React.Component<Props, any> {
         >
           <Text style={Styles.btn}>
             login
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
+          onPress={()=>{
+            Linking.canOpenURL('weixin://').then(supported => {
+              if (supported) {
+                Linking.openURL('weixin://');
+              } else {
+                Toast.info(`请先安装XXX`);
+              }
+            });
+          }}
+        >
+          <Text style={Styles.btn}>
+            打开微信
           </Text>
         </TouchableOpacity>
 
