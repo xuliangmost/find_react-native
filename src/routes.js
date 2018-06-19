@@ -11,7 +11,6 @@ import {
   StatusBar,
   Linking,
   AppState,
-  Text
 } from 'react-native';
 import {createStackNavigator} from 'react-navigation'
 import MainScreen from './components/mainScreen'
@@ -38,9 +37,9 @@ const Page = createStackNavigator({
     gesturesEnabled: true,
     header: null,
   },
-  transitionConfig: (): Object => ({
+  transitionConfig: (): any => ({
     transitionSpec: {
-      duration: 250,
+      duration: 300,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
     },
@@ -48,16 +47,16 @@ const Page = createStackNavigator({
       const {layout, position, scene} = sceneProps;
       const {index, route} = scene;
       const params = route.params || {};
-      const direction = params.direction || 'X';
+      const direction = params.direction || 'Y_UP';
       const height = layout.initHeight;
       const translateX = position.interpolate({
         inputRange: [index - 1, index, index + 1],
         outputRange: [height, 0, 0],
       });
 
-      const translateY = position.interpolate({
+      let translateY = position.interpolate({
         inputRange: [index - 1, index, index + 1],
-        outputRange: [-height, 0, 0],
+        outputRange: [direction === 'Y_UP' ? height : -height, 0, 0],
       });
 
       const opacity = position.interpolate({
@@ -69,9 +68,11 @@ const Page = createStackNavigator({
         inputRange: [index - 1, index, index + 1],
         outputRange: [4, 1, 1]
       });
+
+      const transform = direction === 'Y_UP_S' ? [{translateY}, {scaleX: scale}, {scaleY: scale}] : direction === 'Y_UP' ? [{translateY}] : direction === 'X' ? [{translateX}] : [{translateX}];
       return {
         opacity,
-        transform: direction === 'X' ? [{translateX}, {scaleX: scale}, {scaleY: scale}] : [{translateY}, {scaleX: scale}, {scaleY: scale}],
+        transform: transform
       };
     },
   }),
@@ -119,7 +120,7 @@ class App extends Component<Props, any> {
     if (nextState === 'background') {
       this.setState({states: `${this.state.states}\n background`})
     }
-  }
+  };
 
   render () {
     return (
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapState (state: Object) {
+function mapState () {
   return {}
 }
 

@@ -79,7 +79,7 @@ class ChatHeader extends React.Component<Props, State> {
 const styles = StyleSheet.create({
   chat_header: {
     height: 50,
-    backgroundColor: 'rgba(255,255,255,.7)',
+    backgroundColor: 'rgba(255,255,255,.5)',
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
