@@ -2,6 +2,6 @@
 ## 个人项目 练手用
 
 
-- [yarn or npm install]
-- [react-native start]
-- [react-native run-android]
+- (#yarn or npm install)
+- (#react-native start)
+- (#react-native run-android)
