@@ -12,5 +12,5 @@
   - [adb shell am start find://app](#)
 
 - [打开具体页面方法](https://coding.net/u/xuliangmost/p/FIND/git/blob/dev/src/routes.js)
-  - [react-navigation 配置 path  example:{chatView:{path:'chatView'}}](https://coding.net/u/xuliangmost/p/FIND/git/blob/dev/src/routes.js#L34)
+  - [react-navigation 配置 path ](https://coding.net/u/xuliangmost/p/FIND/git/blob/dev/src/routes.js#L34)
   - [adb shell am start find://app/chatView](#)
