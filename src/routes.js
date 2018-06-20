@@ -18,14 +18,21 @@ import ChatView from './components/mainScreen/chatView'
 import Login from './components/login'
 import {connect} from 'react-redux'
 import {Toast} from 'antd-mobile-rn'
+import {getPageParams} from "./tools/tool";
 
 const Page = createStackNavigator({
   MainScreen: {
     screen: MainScreen,
-    path: 'app/mainScreen'
+    path: 'mainScreen/:id/name'
   },
-  Login: {screen: Login},
-  ChatView: {screen: ChatView},
+  Login: {
+    screen: Login,
+    path: 'login'
+  },
+  ChatView: {
+    screen: ChatView,
+    path: 'charView/:title'
+  },
 }, {
   initialRouteName: 'MainScreen',
   headerMode: 'screen',
@@ -80,8 +87,13 @@ const Page = createStackNavigator({
 
 
 type Props = {
-  loginState: boolean
+  loginState: boolean,
+  navigation:Object
 };
+
+
+const prefix = 'find://app/';
+const MainApp = () => <Page uriPrefix={prefix}/>;
 
 class App extends Component<Props, any> {
 
@@ -103,7 +115,7 @@ class App extends Component<Props, any> {
   componentDidMount () {
     Linking.getInitialURL().then((url) => {
       if (url) {
-        Toast.info(`'Initial url is: ' + ${url}`, 2)
+        Toast.info(`${JSON.stringify(getPageParams(url))}`, 4);
       }
     }).catch(err => console.error('An error occurred', err));
     AppState.addEventListener('change', this._handleAppStateChange);
@@ -126,7 +138,7 @@ class App extends Component<Props, any> {
     return (
       <View style={styles.container}>
         <StatusBar hidden={false}/>
-        <Page/>
+        <MainApp/>
       </View>
     );
   }
