@@ -21,43 +21,29 @@ import {Toast} from 'antd-mobile-rn'
 import {mostRequest} from "../../tools/axios_";
 import {API} from "../../tools/API";
 
-// const ScreenHeight = Dimensions.get('window').height;
-// const animationType = 'bottom';
-
 type Props = {
   navigation: Object,
-  loginCallBack: any,
-  setLoginState: Function,
-  setLoginCallBack: Function
 }
 type State = {
   qqNumber: string,
   password: string,
   loading: boolean,
-  loginCallBack: any,
   hiddenStatusBar: boolean,
-  hiddenFlag: boolean
 }
 const iconNum = Math.random() * 10;
 const icons_img = iconNum > 5 ? require('./images/bg_two.png') : require('./images/bg_one.png');
 
 class Login extends React.Component<Props, State> {
-  setStatusBar: any;
-  hiddenLogin: any;
   viewDidAppear: Object;
+  source: Object;
   state = {
     qqNumber: '123456',
     password: '123456',
     loading: false,
-    loginCallBack: this.props.loginCallBack,
     hiddenStatusBar: false,
-    hiddenFlag: true
   };
 
   componentWillReceiveProps (nextProps: Object) {
-    if (this.props.loginCallBack !== nextProps.loginCallBack) {
-      this.setState({loginCallBack: nextProps.loginCallBack})
-    }
   }
 
   componentWillUnmount () {
@@ -66,12 +52,17 @@ class Login extends React.Component<Props, State> {
 
 
   componentWillMount () {
-    this.setState({hiddenStatusBar: true, hiddenFlag: false});
+    this.setState({hiddenStatusBar: true});
+
     // this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => console.log(123));
   }
 
   componentDidMount () {
 
+  }
+
+  componentWillUnmount () {
+    this.source.cancel('cancel login');
   }
 
   login = () => {
@@ -83,7 +74,12 @@ class Login extends React.Component<Props, State> {
       return false
     }
     this.setState({loading: true});
-    mostRequest.post(`${API}/mostFind/api/authority/login`, {user_name: qqNumber, user_password: password}).then(res => {
+    this.source = mostRequest.getAxiosCancelTokenSource().source();
+    mostRequest.post(`${API}/mostFind/api/authority/login`, {
+      user_name: qqNumber,
+      user_password: password,
+      cancelToken: this.source.token
+    }).then(res => {
       if (res.data.status === 'ok') {
         navigation.state.params.callBack();
         this.setState({hiddenStatusBar: false});
@@ -96,43 +92,12 @@ class Login extends React.Component<Props, State> {
       this.setState({loading: false});
     });
   };
-  // login = () => {
-  //   const {setLoginState, setLoginCallBack} = this.props;
-  //   const {loginCallBack, qqNumber, password} = this.state;
-  //   Keyboard.dismiss();
-  //   if (qqNumber !== '123456' || password !== '123456') {
-  //     Toast.fail('账号或密码不正确，请重新输入', 1.5);
-  //     return false
-  //   }
-  //   this.setState({loading: true});
-  //   mostRequest.post(`${API}/mostFind/api/authority/login`, {user_name: qqNumber, user_password: password}).then(res => {
-  //     if (res.data.status === 'ok') {
-  //       this.setState({hiddenFlag: true, hiddenStatusBar: false}, () => {
-  //         this.hiddenLogin = setTimeout(() => {
-  //           loginCallBack && loginCallBack();
-  //           setLoginState(false);
-  //           setLoginCallBack(null);
-  //         }, 300)
-  //       });
-  //     } else {
-  //       Toast.fail('登录失败', 1.5)
-  //     }
-  //   }).catch(() => {
-  //     Toast.fail('error', 1.5);
-  //     this.setState({loading: false});
-  //   });
-  // };
 
   render () {
-    const {qqNumber, password, loading, hiddenStatusBar, hiddenFlag} = this.state;
+    const {qqNumber, password, loading, hiddenStatusBar} = this.state;
     return (
       <View
-
         style={styles.box}
-        // style={!hiddenFlag ? [styles.box] : [styles.box_hidden]}
-        // easing='ease'
-        // transition={animationType}
-        // duration={300}
       >
         <StatusBar hidden={hiddenStatusBar}/>
         <ImageBackground source={icons_img} style={styles.page_bg}>
@@ -274,9 +239,7 @@ const styles = StyleSheet.create({
 });
 
 function mapState (state) {
-  return {
-    loginCallBack: state.loginCallBack
-  }
+  return {}
 }
 
 export default connect(mapState, {...CommonActions})(Login)

@@ -33,15 +33,11 @@ class Message extends React.Component<Props, any> {
     messages: []
   };
 
-  alertLogin = async () => {
-    // this.props.needLogin(true, () => {
-    //   this.getList().then();
-    // })
-    this.props.navigation.navigate('Login', {direction: 'Y', callBack: () => this.getList()})
+  login = async () => {
+    this.props.navigation.navigate('Login', {direction: 'Y_UP_S', callBack: () => this.getList()})
   };
 
   componentDidMount () {
-
     this.viewDidAppear = this.props.navigation.addListener(
       'willFocus',
       () => {
@@ -88,7 +84,7 @@ class Message extends React.Component<Props, any> {
         <MainScreenHeader value='消息' navigation={navigation}/>
         <TouchableOpacity
           style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
-          onPress={this.alertLogin}
+          onPress={this.login}
         >
           <Text style={Styles.btn}>
             login
@@ -96,7 +92,7 @@ class Message extends React.Component<Props, any> {
         </TouchableOpacity>
         <TouchableOpacity
           style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
-          onPress={()=>{
+          onPress={() => {
             Linking.canOpenURL('weixin://').then(supported => {
               if (supported) {
                 Linking.openURL('weixin://');
@@ -119,7 +115,7 @@ class Message extends React.Component<Props, any> {
             <MessageList
               navigation={navigation}
               onPress={() => {
-                navigation.navigate('ChatView', {title: item.name})
+                navigation.navigate('ChatView', {title: item.name, direction: 'X'})
               }}
               value={item}
             />
@@ -139,7 +135,7 @@ const Styles = StyleSheet.create({
 });
 
 
-function mapState (state) {
+function mapState () {
   return {}
 }
 

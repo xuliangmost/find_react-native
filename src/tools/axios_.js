@@ -54,7 +54,10 @@ const mostRequest = {
   },
   request (config = {}) {
     return service(config)
+  },
+  getAxiosCancelTokenSource: () => {
+    return axios.CancelToken
   }
 };
 
-export {mostRequest}
+export {mostRequest, service}

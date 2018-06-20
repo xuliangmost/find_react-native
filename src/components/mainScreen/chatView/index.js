@@ -151,7 +151,7 @@ class ChatView extends React.Component<Props, any> {
     const {title} = this.state;
     return (
       <View style={styles.chat_container}>
-        <ChatHeader renderRight={() => <Text>right</Text>} back navigation={navigation} title={title}/>
+        <ChatHeader value renderRight={() => <Text>right</Text>} back navigation={navigation} title={title}/>
         <GiftedChat
           showUserAvatar={true}
           messages={this.state.messages}
