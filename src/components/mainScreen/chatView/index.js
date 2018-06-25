@@ -1,12 +1,6 @@
 /**@flow*/
 import * as React from 'react'
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  Linking
-} from 'react-native'
+import {Linking, StyleSheet, Text, TouchableHighlight, View} from 'react-native'
 import ChatHeader from "../../common/chatHeader";
 import {GiftedChat} from 'react-native-gifted-chat'
 import {PickImage} from "../../../tools/pickImages";
@@ -160,6 +154,7 @@ class ChatView extends React.Component<Props, any> {
           renderAvatarOnTop
           timeFormat={'H:MM'}
           label={'发送'}
+          style={{height:44}}
           textInputProps={{autoFocus: true}}
           onInputTextChanged={sendValue => this.setState({sendValue})}
           renderActions={this.renderActions}

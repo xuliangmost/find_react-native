@@ -35,7 +35,6 @@ const icons_img = iconNum > 5 ? require('./images/bg_two.png') : require('./imag
 
 class Login extends React.Component<Props, State> {
   viewDidAppear: Object;
-  source: Object;
   state = {
     qqNumber: '123456',
     password: '123456',
@@ -62,7 +61,7 @@ class Login extends React.Component<Props, State> {
   }
 
   componentWillUnmount () {
-    this.source.cancel('cancel login');
+    // this.source.cancel('cancel login');
   }
 
   login = () => {
@@ -74,11 +73,9 @@ class Login extends React.Component<Props, State> {
       return false
     }
     this.setState({loading: true});
-    this.source = mostRequest.getAxiosCancelTokenSource().source();
     mostRequest.post(`${API}/mostFind/api/authority/login`, {
       user_name: qqNumber,
       user_password: password,
-      cancelToken: this.source.token
     }).then(res => {
       if (res.data.status === 'ok') {
         navigation.state.params.callBack();
@@ -238,7 +235,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapState (state) {
+function mapState () {
   return {}
 }
 

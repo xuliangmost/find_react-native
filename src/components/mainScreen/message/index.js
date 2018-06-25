@@ -1,13 +1,5 @@
 /**@flow*/
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-  BackHandler, ToastAndroid,
-  Linking
-} from 'react-native'
+import {BackHandler, FlatList, Linking, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from 'react-native'
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {HomePageAction} from "./actions";
@@ -26,14 +18,18 @@ type Props = {
 }
 
 class Message extends React.Component<Props, any> {
+  navigator: Object;
+  setState: Function;
+  viewDidAppear: Object;
   lastBackPressed: number;
   backHandlers: Object;
-  viewDidAppear: Object;
   state = {
-    messages: []
+    messages: [],
+    drawerOpen: false,
+    drawerDisabled: false,
   };
 
-  login = async () => {
+  login = () => {
     this.props.navigation.navigate('Login', {direction: 'Y_UP_S', callBack: () => this.getList()})
   };
 
@@ -52,11 +48,6 @@ class Message extends React.Component<Props, any> {
     )
   }
 
-  componentWillReceiveProps (nextProps) {
-
-  }
-
-
   onBackAndroid = (): boolean => {
     if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
       BackHandler.exitApp();
@@ -65,8 +56,6 @@ class Message extends React.Component<Props, any> {
     ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
     return true;
   };
-
-
   getList = async () => {
     Toast.loading('', 0);
     let messages = await getMessageList();
@@ -92,6 +81,15 @@ class Message extends React.Component<Props, any> {
         </TouchableOpacity>
         <TouchableOpacity
           style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
+          onPress={() => navigation.navigate('Music', {direction: 'X'})}
+        >
+          <Text style={Styles.btn}>
+            Music
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
           onPress={() => {
             Linking.canOpenURL('weixin://').then(supported => {
               if (supported) {
@@ -108,6 +106,7 @@ class Message extends React.Component<Props, any> {
         </TouchableOpacity>
 
         <FlatList
+          getItemLayout={(data, index) => ({length: 56, offset: 56 * index, index})}
           data={messages}
           keyExtractor={this._keyExtractor}
           extraData={this.state}
@@ -121,7 +120,6 @@ class Message extends React.Component<Props, any> {
             />
           )}
         />
-
       </View>
     )
   }
@@ -133,7 +131,6 @@ const Styles = StyleSheet.create({
     backgroundColor: '#ffffff'
   }
 });
-
 
 function mapState () {
   return {}

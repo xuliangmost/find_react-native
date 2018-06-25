@@ -7,10 +7,7 @@ import * as React from 'react'
 import {createBottomTabNavigator} from 'react-navigation'
 import Message from './message'
 import Contacts from './contacts'
-import {
-  Platform,
-  Image
-} from 'react-native'
+import {Image, Platform} from 'react-native'
 
 const MainScreen = createBottomTabNavigator({
   Message: {
@@ -52,5 +49,6 @@ const MainScreen = createBottomTabNavigator({
     },
   },
 });
+
 
 export default MainScreen
