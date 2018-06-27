@@ -38,12 +38,7 @@ class ChatHeader extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Object) {
-    if (this.props.title !== nextProps.title) {
-      this.setState({title: nextProps.title})
-    }
-    if (this.props.renderRight !== nextProps.renderRight) {
-      this.setState({renderRight: nextProps.renderRight})
-    }
+
   }
 
   render () {
@@ -79,7 +74,8 @@ class ChatHeader extends React.Component<Props, State> {
 const styles = StyleSheet.create({
   chat_header: {
     height: 50,
-    backgroundColor: 'rgba(255,255,255,.5)',
+    backgroundColor: '#ffffff',
+    // backgroundColor: 'rgba(255,255,255,.5)',
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',

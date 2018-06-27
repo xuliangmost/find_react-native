@@ -23,7 +23,7 @@ const Page = createStackNavigator(RouteConfig, {
   },
   transitionConfig: (): any => ({
     transitionSpec: {
-      duration: 300,
+      duration: 350,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
     },
