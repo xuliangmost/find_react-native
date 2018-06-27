@@ -5,10 +5,14 @@
 	<title>Title</title>
 </head>
 <body>
-<button onclick="send()">跳转到百度</button>
+<button onclick="jumpBd()">跳转到百度</button>
+<button onclick="scanCode()">scanCode</button>
 </body>
-<script>
-  function send () {
+<script defer>
+
+
+
+  function jumpBd () {
     let webviewBridgecallRN = window.webviewBridgecallRN
     webviewBridgecallRN.call('openNewView',
       {
@@ -18,7 +22,15 @@
       });
   }
 
-
+  function scanCode () {
+    let webviewBridgecallRN = window.webviewBridgecallRN
+    webviewBridgecallRN.call('scanCode',
+      {
+        url: 'https://www.baidu.com'
+      }, function (a) {
+        console.log(a);
+      });
+  }
 </script>
 </html>
 

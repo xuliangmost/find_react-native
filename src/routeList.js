@@ -5,6 +5,7 @@ import ChatView from './components/mainScreen/chatView'
 import Login from './components/login'
 import Music from './components/music/home/index'
 import WebView from './components/_webView'
+import ScanCode from "./components/toolView/scanCode";
 
 const MainRoute = {
   MainScreen: {
@@ -26,7 +27,11 @@ const MainRoute = {
   WebView_: {
     screen: WebView,
     path: 'WebView_/:id'
-  }
+  },
+  ScanCode: {
+    screen: ScanCode,
+    path: 'ScanCode/:id'
+  },
 };
 
 const MusicRoute = {

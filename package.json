@@ -20,7 +20,7 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "antd-mobile-rn": "^2.2.0-beta.1",
+    "antd-mobile-rn": "2.2.0",
     "babel-cli": "^6.26.0",
     "babel-jest": "23.0.1",
     "babel-preset-flow": "^6.23.0",

@@ -12,7 +12,8 @@ type Props = {
   title: string,
   back?: boolean,
   navigation: Object,
-  renderRight?: Function
+  renderRight?: Function,
+  backgroundColor?: string
 }
 type State = {
   title: string,
@@ -23,7 +24,7 @@ type State = {
 
 class ChatHeader extends React.Component<Props, State> {
   setState: Function;
-
+  setDevices: any;
   state = {
     title: this.props.title || 'chat',
     back: this.props.back || false,
@@ -32,9 +33,13 @@ class ChatHeader extends React.Component<Props, State> {
   };
 
   componentDidMount () {
-    setTimeout(() => {
+    this.setDevices = setTimeout(() => {
       this.setState({machine: `iphone6 金色`})
     }, 1000)
+  }
+
+  componentWillUnmount () {
+    clearTimeout(this.setDevices)
   }
 
   componentWillReceiveProps (nextProps: Object) {
@@ -43,9 +48,9 @@ class ChatHeader extends React.Component<Props, State> {
 
   render () {
     const {title, back, machine, renderRight} = this.state;
-    const {navigation} = this.props;
+    const {navigation, backgroundColor = '#ffffff'} = this.props;
     return (
-      <View style={styles.chat_header}>
+      <View style={[styles.chat_header, {backgroundColor: backgroundColor}]}>
         {
           back &&
           <TouchableOpacity
@@ -74,7 +79,6 @@ class ChatHeader extends React.Component<Props, State> {
 const styles = StyleSheet.create({
   chat_header: {
     height: 50,
-    backgroundColor: '#ffffff',
     // backgroundColor: 'rgba(255,255,255,.5)',
     flexDirection: 'row',
     alignItems: 'center',

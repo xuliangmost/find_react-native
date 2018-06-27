@@ -50,6 +50,12 @@ export function resolveMessage (data: Object, navigation: Object) {
         callBack: data.callBack || null
       })
     }
+
+    if (type === 'scanCode') {
+      navigation.navigate('ScanCode', {
+        callBack: data.callBack || null
+      })
+    }
   }
 
   if (data.name === 'request') {
