@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  Platform
   // Dimensions
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -170,7 +171,8 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // left: 0,
     // [animationType]: 0,
-    flex: 1
+    flex: 1,
+    marginTop: Platform.OS === 'ios' ? -50 : 0
   },
   box_hidden: {
     // [animationType]: ScreenHeight,

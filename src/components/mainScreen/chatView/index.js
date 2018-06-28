@@ -179,7 +179,6 @@ class ChatView extends React.Component<Props, any> {
 const styles = StyleSheet.create({
   chat_container: {
     flex: 1,
-    paddingTop: 50
   },
   mapView: {
     width: 150,

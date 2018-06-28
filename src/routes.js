@@ -3,7 +3,10 @@
  */
 
 import React, {Component} from 'react';
-import {Animated, AppState, Easing, Linking, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import {
+  Animated, AppState, Easing, Linking, View, StatusBar,
+  StyleSheet,
+} from 'react-native';
 import {createStackNavigator} from 'react-navigation'
 import {RouteConfig} from './routeList'
 import {connect} from 'react-redux'
@@ -75,7 +78,6 @@ const MainApp = () => <Page uriPrefix={prefix}/>;
 
 class App extends Component<Props, any> {
   setState: Function;
-
   constructor (props) {
     super(props);
     this.state = {
@@ -112,11 +114,13 @@ class App extends Component<Props, any> {
 
   render () {
     return (
-      <SafeAreaView style={styles.container}>
-        <StatusBar hidden={false} backgroundColor='rgba(0,0,0,.2)' animated/>
+      <View style={styles.container}>
+        <StatusBar
+          translucent={true}
+          hidden={false}
+          backgroundColor={'rgba(0,0,0,.2)'} animated/>
         <MainApp/>
-      </SafeAreaView>
-
+      </View>
     );
   }
 }

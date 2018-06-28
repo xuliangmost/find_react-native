@@ -3,32 +3,34 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
+	<style>
+		button{
+			font-size: 14px;
+		}
+	</style>
 </head>
+
 <body>
 <button onclick="jumpBd()">跳转到百度</button>
 <button onclick="scanCode()">scanCode</button>
 </body>
 <script defer>
-
-
-
   function jumpBd () {
     let webviewBridgecallRN = window.webviewBridgecallRN
     webviewBridgecallRN.call('openNewView',
       {
         url: 'https://www.baidu.com'
-      }, function (a) {
-        console.log(a);
+      }, function () {
+        console.log('callBack');
       });
   }
-
   function scanCode () {
     let webviewBridgecallRN = window.webviewBridgecallRN
     webviewBridgecallRN.call('scanCode',
       {
         url: 'https://www.baidu.com'
-      }, function (a) {
-        console.log(a);
+      }, function () {
+        console.log('callBack');
       });
   }
 </script>

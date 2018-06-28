@@ -8,6 +8,7 @@ import {createBottomTabNavigator} from 'react-navigation'
 import Message from './message'
 import Contacts from './contacts'
 import {Image, Platform} from 'react-native'
+import {isIphoneX} from "../../tools/checkDevices";
 
 const MainScreen = createBottomTabNavigator({
   Message: {
@@ -41,11 +42,11 @@ const MainScreen = createBottomTabNavigator({
       height: 50,
       borderTopWidth: 0.5,
       borderTopColor: '#a8a8a8',
+      marginBottom: isIphoneX() ? -22 : 0
     },
     labelStyle: {
       fontSize: 10,
       marginTop: (Platform.OS === 'ios') ? -2 : -1,
-      marginBottom: (Platform.OS === 'ios') ? 6 : 0,
     },
   },
 });

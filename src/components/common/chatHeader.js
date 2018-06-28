@@ -5,8 +5,10 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Image
+  Image, Platform,
+  StatusBar
 } from 'react-native'
+import {isIphoneX} from "../../tools/checkDevices";
 
 type Props = {
   title: string,
@@ -50,26 +52,31 @@ class ChatHeader extends React.Component<Props, State> {
     const {title, back, machine, renderRight} = this.state;
     const {navigation, backgroundColor = '#ffffff'} = this.props;
     return (
-      <View style={[styles.chat_header, {backgroundColor: backgroundColor}]}>
-        {
-          back &&
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            activeOpacity={.6}
-            style={styles.chat_header_left}
-          >
-            <View>
-              <Image style={{width: 28, height: 30}} source={require('./images/left.png')}/>
-            </View>
-          </TouchableOpacity>
-        }
+      <View style={styles.container_chat}>
+        <View style={[styles.chat_header, {backgroundColor: backgroundColor}]}>
+          {
+            back ?
+              <TouchableOpacity
+                onPress={() => {
+                  console.log(this.props.navigation)
+                  navigation.goBack()
+                }}
+                activeOpacity={.6}
+                style={styles.chat_header_left}
+              >
+                <View>
+                  <Image style={{width: 28, height: 30}} source={require('./images/left.png')}/>
+                </View>
+              </TouchableOpacity> : null
+          }
 
-        <View style={styles.chat_header_title}>
-          <Text style={styles.chat_header_h1}>{title}</Text>
-          <Text style={styles.chat_header_h2}>{machine}</Text>
-        </View>
-        <View style={styles.chat_header_right}>
-          {renderRight && renderRight()}
+          <View style={styles.chat_header_title}>
+            <Text style={styles.chat_header_h1}>{title}</Text>
+            <Text style={styles.chat_header_h2}>{machine}</Text>
+          </View>
+          <View style={styles.chat_header_right}>
+            {renderRight && renderRight()}
+          </View>
         </View>
       </View>
     )
@@ -77,16 +84,15 @@ class ChatHeader extends React.Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
+  container_chat: {
+    paddingTop: isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
+    backgroundColor: '#fff'
+  },
   chat_header: {
     height: 50,
     // backgroundColor: 'rgba(255,255,255,.5)',
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    zIndex: 100
   },
   chat_header_left: {
     height: 50,
@@ -96,7 +102,8 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     justifyContent: 'center',
-    paddingLeft: -2
+    paddingLeft: -2,
+    zIndex: 100
   },
   chat_header_title: {
     flex: 1,

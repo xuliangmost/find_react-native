@@ -22,7 +22,7 @@ class WebView_ extends React.Component<Props, any> {
   }
 
   onMessage = (e: Object) => {
-    let obj = JSON.parse(e.nativeEvent.data, function (k, v) {
+    let obj = JSON.parse(e.nativeEvent.data, (k, v) => {
       if (v.indexOf && v.indexOf('function') > -1) {
         return eval("(function(){return " + v + " })()")
       }
@@ -33,7 +33,7 @@ class WebView_ extends React.Component<Props, any> {
 
   componentWillUnmount () {
     this.props.navigation.state.params.callBack &&
-    this.props.navigation.state.params.callBack({status: 'ok'})
+    this.props.navigation.state.params.callBack()
   }
 
   render () {
@@ -59,7 +59,6 @@ class WebView_ extends React.Component<Props, any> {
 const styles = StyleSheet.create({
   webView: {
     flex: 1,
-    marginTop: 50
   }
 })
 
