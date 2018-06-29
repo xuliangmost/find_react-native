@@ -113,7 +113,14 @@ class Message extends React.Component<Props, any> {
             打开webView
           </Text>
         </TouchableOpacity>
-
+        <TouchableOpacity
+          style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
+          onPress={() => navigation.navigate('Camera', {direction: 'X'})}
+        >
+          <Text style={Styles.btn}>
+            打开相机扫描
+          </Text>
+        </TouchableOpacity>
         <FlatList
           getItemLayout={(data, index) => ({length: 56, offset: 56 * index, index})}
           data={messages}
