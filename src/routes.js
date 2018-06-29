@@ -4,29 +4,16 @@
 
 import React, {Component} from 'react';
 import {
+  Animated, AppState, Easing, Linking, View, StatusBar,
   StyleSheet,
-  View,
-  Easing,
-  Animated,
-  StatusBar,
-  Linking,
-  AppState,
 } from 'react-native';
 import {createStackNavigator} from 'react-navigation'
-import MainScreen from './components/mainScreen'
-import ChatView from './components/mainScreen/chatView'
-import Login from './components/login'
+import {RouteConfig} from './routeList'
 import {connect} from 'react-redux'
 import {Toast} from 'antd-mobile-rn'
+import {getPageParams} from "./tools/tool";
 
-const Page = createStackNavigator({
-  MainScreen: {
-    screen: MainScreen,
-    path: 'app/mainScreen'
-  },
-  Login: {screen: Login},
-  ChatView: {screen: ChatView},
-}, {
+const Page = createStackNavigator(RouteConfig, {
   initialRouteName: 'MainScreen',
   headerMode: 'screen',
   initialRouteParams: {
@@ -39,7 +26,7 @@ const Page = createStackNavigator({
   },
   transitionConfig: (): any => ({
     transitionSpec: {
-      duration: 300,
+      duration: 350,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
     },
@@ -47,13 +34,14 @@ const Page = createStackNavigator({
       const {layout, position, scene} = sceneProps;
       const {index, route} = scene;
       const params = route.params || {};
-      const direction = params.direction || 'Y_UP';
+      const direction = params.direction || 'X';
       const height = layout.initHeight;
+      const width = layout.initWidth;
       const translateX = position.interpolate({
         inputRange: [index - 1, index, index + 1],
-        outputRange: [height, 0, 0],
+        outputRange: [direction === 'X_UP' ? -width : width, direction === 'X_UP' ? -width * .2 : 0, 0],
       });
-
+//如果是X_UP  就从左边滑出占据80%的宽度
       let translateY = position.interpolate({
         inputRange: [index - 1, index, index + 1],
         outputRange: [direction === 'Y_UP' ? height : -height, 0, 0],
@@ -80,15 +68,16 @@ const Page = createStackNavigator({
 
 
 type Props = {
-  loginState: boolean
+  loginState: boolean,
+  navigation: Object
 };
 
+
+const prefix = 'find://app/';
+const MainApp = () => <Page uriPrefix={prefix}/>;
+
 class App extends Component<Props, any> {
-
-  lastBackPressed: number;
-  backHandlers: Function;
   setState: Function;
-
   constructor (props) {
     super(props);
     this.state = {
@@ -103,11 +92,12 @@ class App extends Component<Props, any> {
   componentDidMount () {
     Linking.getInitialURL().then((url) => {
       if (url) {
-        Toast.info(`'Initial url is: ' + ${url}`, 2)
+        Toast.info(`${JSON.stringify(getPageParams(url))}`, 4);
       }
     }).catch(err => console.error('An error occurred', err));
     AppState.addEventListener('change', this._handleAppStateChange);
   }
+
 
   componentWillUnmount () {
     AppState.removeEventListener('change', this._handleAppStateChange);
@@ -125,8 +115,11 @@ class App extends Component<Props, any> {
   render () {
     return (
       <View style={styles.container}>
-        <StatusBar hidden={false}/>
-        <Page/>
+        <StatusBar
+          translucent={true}
+          hidden={false}
+          backgroundColor={'rgba(0,0,0,.2)'} animated/>
+        <MainApp/>
       </View>
     );
   }
@@ -144,3 +137,4 @@ function mapState () {
 }
 
 export default connect(mapState)(App)
+

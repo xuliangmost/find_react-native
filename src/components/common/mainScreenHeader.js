@@ -7,8 +7,10 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
-  Dimensions
+  Dimensions, Platform,
+  StatusBar
 } from 'react-native'
+import {isIphoneX} from "../../tools/checkDevices";
 
 type Props = {
   value: string,
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 40,
     height: 40,
-    borderRadius: 20
+    borderRadius: 20,
   },
   commonHeader: {
     padding: 10,
@@ -60,7 +62,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 0.5,
-    borderBottomColor: 'rgba(0,0,0,.2)'
+    borderBottomColor: 'rgba(0,0,0,.2)',
+    paddingTop: isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight + 10,
   },
   commonHeaderText: {
     fontSize: 18,
