@@ -148,6 +148,7 @@ class Message extends React.Component<Props, any> {
 						/>
 					)}
 				/>
+
 			</View>
 		)
 	}
@@ -157,7 +158,7 @@ const Styles = StyleSheet.create({
 	btn: {
 		padding: 10,
 		backgroundColor: '#ffffff'
-	}
+	},
 });
 
 function mapState () {
