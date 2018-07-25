@@ -4,6 +4,14 @@
 
 # Xcode
 #
+android/.settings/
+android/app/.settings/
+android/app/.classpath
+android/app/.project
+android/app/gradle.properties
+
+android/.project
+
 build/
 *.pbxuser
 !default.pbxuser
@@ -55,3 +63,4 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+src/assets/

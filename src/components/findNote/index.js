@@ -59,7 +59,7 @@ class FindNote extends React.Component<Props, any> {
 						onPress={() => this.setState({deleteVisible: !deleteVisible})}
 						activeOpacity={.7}>
 						<View style={styles.control_btn}>
-							<Text style={styles.control_btn_text}>编辑</Text>
+							<Text style={styles.control_btn_text}>{deleteVisible ? '完成' : '编辑'}</Text>
 						</View>
 					</TouchableOpacity>
 
