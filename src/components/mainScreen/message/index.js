@@ -10,6 +10,7 @@ import {getMessageList} from "./reuestAction";
 import {Toast} from 'antd-mobile-rn'
 import ChatView from "../chatView";
 import ScanCode from "../../toolView/scanCode";
+import {localStorageS} from "../../../tools/localStorage";
 
 type Props = {
 	navigation: Object,
@@ -148,6 +149,7 @@ class Message extends React.Component<Props, any> {
 						/>
 					)}
 				/>
+
 			</View>
 		)
 	}
@@ -157,7 +159,7 @@ const Styles = StyleSheet.create({
 	btn: {
 		padding: 10,
 		backgroundColor: '#ffffff'
-	}
+	},
 });
 
 function mapState () {
