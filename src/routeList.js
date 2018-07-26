@@ -8,6 +8,8 @@ import WebView from './components/_webView'
 import ScanCode from "./components/toolView/scanCode";
 import FindNote from "./components/findNote";
 
+import Camera from "./components/camera/index"
+
 const MainRoute = {
 	MainScreen: {
 		screen: MainScreen,
@@ -45,5 +47,11 @@ const MusicRoute = {
 	},
 };
 
+const CameraRoute = {
+	Camera: {
+		screen: Camera,
+		path: 'Camera'
+	},
+};
 
-export const RouteConfig = {...MainRoute, ...MusicRoute};
+export const RouteConfig = {...MainRoute, ...MusicRoute, ...CameraRoute};
