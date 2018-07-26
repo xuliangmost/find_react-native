@@ -35,9 +35,9 @@ class NoteList extends React.Component<Props, any> {
 	componentDidMount () {
 	}
 
-	copyToCli = async () => {
+	copyToCli = async (content: string) => {
 		Alert.alert('复制成功', '');
-		await  Clipboard.setString('Most is cool man');
+		await  Clipboard.setString(content);
 	};
 
 	render () {
@@ -64,7 +64,7 @@ class NoteList extends React.Component<Props, any> {
 					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={async () => {
-							await this.copyToCli()
+							await this.copyToCli(value.content)
 						}}
 						activeOpacity={.7}>
 						<Text style={styles.note_copy}>复制</Text>
