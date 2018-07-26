@@ -5,13 +5,17 @@ import {
 	Text,
 	StyleSheet,
 	TouchableOpacity,
-	Clipboard
+	Clipboard,
+	Alert,
+
 } from 'react-native'
-import * as Animatable from 'react-native-animatable'
-import {Toast} from 'antd-mobile-rn'
 
 type Props = {
 	deleteVisible: boolean,
+	navigation: Object,
+	value: Object,
+	onPress?: Function,
+	deltetNote?: Function,
 }
 
 class NoteList extends React.Component<Props, any> {
@@ -32,33 +36,35 @@ class NoteList extends React.Component<Props, any> {
 	}
 
 	copyToCli = async () => {
-		Clipboard.setString('Most is cool man');
-		const str = await Clipboard.getString();
-		if (str === 'Most is cool man') {
-			Toast.success('复制成功', 1.5)
-		} else {
-			Toast.fail('复制失败', 1.5)
-		}
+		Alert.alert('复制成功', '');
+		await  Clipboard.setString('Most is cool man');
 	};
 
 	render () {
 		const {deleteVisible} = this.state;
+		const {value, onPress, deltetNote} = this.props;
 		return (
 			<View style={[styles.note_container]}>
-				<TouchableOpacity activeOpacity={.7}>
-					<Animatable.View transition={'marginLeft'} style={[styles.delete_container, {marginLeft: deleteVisible ? 0 : -50}]}>
+				<TouchableOpacity
+					onPress={() => {
+						deltetNote && deltetNote(value.id)
+					}}
+					activeOpacity={.7}>
+					<View style={[styles.delete_container, {marginLeft: deleteVisible ? 0 : -50}]}>
 						<Text style={{color: '#fff', fontSize: 14}}>删除</Text>
-					</Animatable.View>
+					</View>
 				</TouchableOpacity>
 
 				<View style={styles.note_content}>
 					<TouchableOpacity
-						style={{flex: 1, flexDirection: 'row', alignItems: 'center'}} activeOpacity={.7}>
-						<Text style={styles.note_description}>123</Text>
+						onPress={() => onPress && onPress()}
+						style={{flex: 1, justifyContent: 'center'}} activeOpacity={.7}>
+						<Text style={styles.note_title}>{value.title}</Text>
+						<Text style={styles.note_description}>{value.content}</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						onPress={() => {
-							this.copyToCli()
+						onPress={async () => {
+							await this.copyToCli()
 						}}
 						activeOpacity={.7}>
 						<Text style={styles.note_copy}>复制</Text>
@@ -72,14 +78,14 @@ class NoteList extends React.Component<Props, any> {
 const styles = StyleSheet.create({
 	delete_container: {
 		width: 50,
-		height: 40,
+		height: 50,
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: 'red'
 	},
 	note_container: {
 		backgroundColor: '#fff',
-		height: 40,
+		height: 50,
 		flexDirection: 'row',
 	},
 	note_content: {
@@ -90,6 +96,11 @@ const styles = StyleSheet.create({
 		width: '100%',
 		borderTopWidth: .7,
 		borderColor: 'rgba(0,0,0,.1)'
+	},
+	note_title: {
+		fontSize: 18,
+		color: '#000',
+		flex: 1,
 	},
 	note_description: {
 		fontSize: 14,

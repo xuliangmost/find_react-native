@@ -70,7 +70,6 @@ class ChatHeader extends React.Component<Props, State> {
 						back ?
 							<TouchableOpacity
 								onPress={() => {
-									console.log(this.props.navigation)
 									navigation.goBack()
 								}}
 								activeOpacity={.6}
@@ -98,7 +97,9 @@ class ChatHeader extends React.Component<Props, State> {
 const styles = StyleSheet.create({
 	container_chat: {
 		paddingTop: isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
-		backgroundColor: '#fff'
+		backgroundColor: '#fff',
+		borderBottomWidth:.7,
+		borderColor:'#C0C0C0'
 	},
 	chat_header: {
 		height: 50,

@@ -5,10 +5,12 @@ import {
 	Text,
 	StyleSheet,
 	TouchableOpacity,
-	FlatList
+	FlatList,
+	Alert
 } from 'react-native'
 import ChatHeader from '../common/chatHeader'
 import NoteList from './noteList'
+import {localStorageS} from "../../tools/localStorage";
 
 type Props = {
 	navigation: Object
@@ -17,9 +19,40 @@ type Props = {
 class FindNote extends React.Component<Props, any> {
 	state = {
 		deleteVisible: false,
-		list: [{id: '123'}, {id: '12'}]
+		list: [],
+		noteList: {}
 	};
 	_keyExtractor = (item) => item.id;
+
+	componentDidMount () {
+		this.getlist()
+	}
+
+	getlist = () => {
+		localStorageS.getString('noteList').then(value => {
+			const list = Object.keys(value).map(ele => {
+				return value[ele]
+			});
+			this.setState({list, noteList: value})
+		}).catch(e => {
+		})
+	};
+
+	deltetNote = (id: string) => {
+		let {noteList, list} = this.state;
+		console.log(id);
+		delete noteList[id];
+		list = list.filter(ele => {
+			return ele.id !== id
+		});
+		localStorageS.save('noteList', noteList).then(res => {
+			Alert.alert(`删除成功`);
+			this.setState({list})
+		}).catch(e => {
+			Alert.alert('操作失败');
+		});
+
+	};
 
 	render () {
 		const {navigation} = this.props;
@@ -31,7 +64,7 @@ class FindNote extends React.Component<Props, any> {
 					renderRight={() => (
 						<TouchableOpacity
 							activeOpacity={.7}>
-							<Text style={styles.header_edit}>Note</Text>
+							<Text style={styles.header_edit}>+</Text>
 						</TouchableOpacity>
 					)}
 					back
@@ -45,10 +78,10 @@ class FindNote extends React.Component<Props, any> {
 					extraData={this.state}
 					renderItem={({item}) => (
 						<NoteList
+							deltetNote={id => this.deltetNote(id)}
 							deleteVisible={deleteVisible}
 							navigation={navigation}
-							onPress={() => {
-							}}
+							onPress={() => navigation.navigate('EditAndAddNote', {direction: 'X', id: item.id, callBack: () => this.getlist()})}
 							value={item}
 						/>
 					)}
@@ -64,6 +97,7 @@ class FindNote extends React.Component<Props, any> {
 					</TouchableOpacity>
 
 					<TouchableOpacity
+						onPress={() => navigation.navigate('EditAndAddNote', {direction: 'X', callBack: () => this.getlist()})}
 						activeOpacity={.7}>
 						<View style={styles.control_btn}>
 							<Text style={styles.control_btn_text}>新建</Text>
@@ -81,7 +115,8 @@ const styles = StyleSheet.create({
 	header_edit: {
 		color: '#1890ff',
 		padding: 6,
-		marginRight: 8
+		marginRight: 8,
+		fontSize: 18
 	},
 	box: {
 		position: 'absolute',

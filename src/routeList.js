@@ -9,6 +9,8 @@ import ScanCode from "./components/toolView/scanCode";
 import FindNote from "./components/findNote";
 
 import Camera from "./components/camera/index"
+import EditAndAddNote from "./components/findNote/editAndAddNote";
+
 const MainRoute = {
 	MainScreen: {
 		screen: MainScreen,
@@ -36,6 +38,9 @@ const MainRoute = {
 	},
 	FindNote: {
 		screen: FindNote
+	},
+	EditAndAddNote: {
+		screen: EditAndAddNote
 	}
 };
 
@@ -47,10 +52,10 @@ const MusicRoute = {
 };
 
 const CameraRoute = {
-  Camera: {
-    screen: Camera,
-    path: 'Camera'
-  },
+	Camera: {
+		screen: Camera,
+		path: 'Camera'
+	},
 };
 
-export const RouteConfig = {...MainRoute, ...MusicRoute,...CameraRoute};
+export const RouteConfig = {...MainRoute, ...MusicRoute, ...CameraRoute};
