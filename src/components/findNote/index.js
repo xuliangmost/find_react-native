@@ -81,7 +81,7 @@ class FindNote extends React.Component<Props, any> {
 							deltetNote={id => this.deltetNote(id)}
 							deleteVisible={deleteVisible}
 							navigation={navigation}
-							onPress={() => navigation.navigate('EditAndAddNote', {direction: 'X', id: item.id, callBack: () => this.getlist()})}
+							onPress={() => navigation.navigate('EditAndAddNote', {direction: 'Y_UP', id: item.id, callBack: () => this.getlist()})}
 							value={item}
 						/>
 					)}
@@ -97,7 +97,7 @@ class FindNote extends React.Component<Props, any> {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						onPress={() => navigation.navigate('EditAndAddNote', {direction: 'X', callBack: () => this.getlist()})}
+						onPress={() => navigation.navigate('EditAndAddNote', {direction: 'Y_UP', callBack: () => this.getlist()})}
 						activeOpacity={.7}>
 						<View style={styles.control_btn}>
 							<Text style={styles.control_btn_text}>新建</Text>

@@ -29,7 +29,6 @@ type State = {
   qqNumber: string,
   password: string,
   loading: boolean,
-  hiddenStatusBar: boolean,
 }
 const iconNum = Math.random() * 10;
 const icons_img = iconNum > 5 ? require('./images/bg_two.png') : require('./images/bg_one.png');
@@ -40,7 +39,6 @@ class Login extends React.Component<Props, State> {
     qqNumber: '123456',
     password: '123456',
     loading: false,
-    hiddenStatusBar: false,
   };
 
   componentWillReceiveProps (nextProps: Object) {
@@ -52,8 +50,6 @@ class Login extends React.Component<Props, State> {
 
 
   componentWillMount () {
-    this.setState({hiddenStatusBar: true});
-
     // this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => console.log(123));
   }
 
@@ -80,7 +76,6 @@ class Login extends React.Component<Props, State> {
     }).then(res => {
       if (res.data.status === 'ok') {
         navigation.state.params.callBack();
-        this.setState({hiddenStatusBar: false});
         navigation.goBack();
       } else {
         Toast.fail('登录失败', 1.5)
@@ -92,12 +87,11 @@ class Login extends React.Component<Props, State> {
   };
 
   render () {
-    const {qqNumber, password, loading, hiddenStatusBar} = this.state;
+    const {qqNumber, password, loading} = this.state;
     return (
       <View
         style={styles.box}
       >
-        <StatusBar hidden={hiddenStatusBar}/>
         <ImageBackground source={icons_img} style={styles.page_bg}>
           <TouchableWithoutFeedback
             onPress={() => {

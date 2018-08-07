@@ -1,16 +1,13 @@
 /**@flow*/
-import {BackHandler, FlatList, Linking, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from 'react-native'
+import {FlatList, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {HomePageAction} from "./actions";
-import MainScreenHeader from '../../common/mainScreenHeader'
 import {CommonActions} from "../../common/actions";
 import MessageList from './messageList'
 import {getMessageList} from "./reuestAction";
 import {Toast} from 'antd-mobile-rn'
 import ChatView from "../chatView";
-import ScanCode from "../../toolView/scanCode";
-import {localStorageS} from "../../../tools/localStorage";
 
 type Props = {
 	navigation: Object,
@@ -36,28 +33,9 @@ class Message extends React.Component<Props, any> {
 	};
 
 	componentDidMount () {
-		this.viewDidAppear = this.props.navigation.addListener(
-			'willFocus',
-			() => {
-				this.backHandlers = BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid.bind(this));
-			}
-		);
-		this.viewDidAppear = this.props.navigation.addListener(
-			'willBlur',
-			() => {
-				this.backHandlers && this.backHandlers.remove();
-			}
-		)
+
 	}
 
-	onBackAndroid = (): boolean => {
-		if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
-			BackHandler.exitApp();
-		}
-		this.lastBackPressed = Date.now();
-		ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
-		return true;
-	};
 	getList = async () => {
 		Toast.loading('', 0);
 		let messages = await getMessageList();
@@ -72,7 +50,6 @@ class Message extends React.Component<Props, any> {
 		const {messages} = this.state;
 		return (
 			<View style={{flex: 1, backgroundColor: '#fff'}}>
-				<MainScreenHeader value='消息' navigation={navigation}/>
 				<TouchableOpacity
 					style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
 					onPress={this.login}
@@ -113,15 +90,6 @@ class Message extends React.Component<Props, any> {
 				>
 					<Text style={Styles.btn}>
 						打开微信
-					</Text>
-				</TouchableOpacity>
-
-				<TouchableOpacity
-					style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
-					onPress={() => navigation.navigate('ScanCode')}
-				>
-					<Text style={Styles.btn}>
-						ScanCode
 					</Text>
 				</TouchableOpacity>
 

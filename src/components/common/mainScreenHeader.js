@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 0.5,
     borderBottomColor: 'rgba(0,0,0,.2)',
-    paddingTop: isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight + 10,
   },
   commonHeaderText: {
     fontSize: 18,
