@@ -1,21 +1,12 @@
 /**@flow*/
 import * as React from 'react'
 import {
-  View,
-  StyleSheet,
-  Text,
-  ImageBackground,
-  StatusBar,
-  TextInput,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TouchableOpacity,
-  Platform
-  // Dimensions
+	ImageBackground,
+	Keyboard, Platform, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View,
+	StatusBar
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {connect} from 'react-redux'
-// import * as Animatable from 'react-native-animatable'
 import Loading from "../common/loading";
 import {CommonActions} from "../common/actions";
 import {Toast} from 'antd-mobile-rn'
@@ -34,6 +25,11 @@ const iconNum = Math.random() * 10;
 const icons_img = iconNum > 5 ? require('./images/bg_two.png') : require('./images/bg_one.png');
 
 class Login extends React.Component<Props, State> {
+
+	static navigationOptions = {
+		header: null
+	};
+
   viewDidAppear: Object;
   state = {
     qqNumber: '123456',
@@ -47,7 +43,6 @@ class Login extends React.Component<Props, State> {
   componentWillUnmount () {
     // this.keyboardDidHideListener.remove();
   }
-
 
   componentWillMount () {
     // this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => console.log(123));
@@ -92,6 +87,7 @@ class Login extends React.Component<Props, State> {
       <View
         style={styles.box}
       >
+				<StatusBar hidden={true}/>
         <ImageBackground source={icons_img} style={styles.page_bg}>
           <TouchableWithoutFeedback
             onPress={() => {
@@ -160,11 +156,6 @@ class Login extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
   box: {
-    // height: '100%',
-    // width: '100%',
-    // position: 'absolute',
-    // left: 0,
-    // [animationType]: 0,
     flex: 1,
     marginTop: Platform.OS === 'ios' ? -50 : 0
   },

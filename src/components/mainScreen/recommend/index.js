@@ -3,7 +3,7 @@ import {
 	BackHandler, StyleSheet,
 	ToastAndroid, View,
 	ScrollView,
-	Image
+	Image,
 } from 'react-native'
 import * as React from 'react'
 import {connect} from 'react-redux'
@@ -12,6 +12,8 @@ import {CommonActions} from "../../common/actions";
 import RecommendHeader from "./recommendHeader";
 import SubTitle from "./subTitle";
 import Carousels from './carousel'
+import SubContent from "./subContent";
+import {isIphoneX} from "../../../tools/checkDevices";
 
 type Props = {
 	navigation: Object,
@@ -65,6 +67,8 @@ class Message extends React.Component<Props, any> {
 					</View>
 					<SubTitle title={'最新期刊'}/>
 					<Carousels/>
+					<SubTitle title={'专属订阅'}/>
+					<SubContent/>
 				</ScrollView>
 			</View>
 		)

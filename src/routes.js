@@ -3,7 +3,10 @@
  */
 
 import React, {Component} from 'react';
-import {Animated, AppState, Easing, Linking, Platform, StatusBar, StyleSheet, View,} from 'react-native';
+import {
+	Animated, AppState, Easing, Linking, Platform, StatusBar, StyleSheet,
+	View, Text
+} from 'react-native';
 import {createStackNavigator} from 'react-navigation'
 import {RouteConfig} from './routeList'
 import {connect} from 'react-redux'
@@ -11,6 +14,7 @@ import {Toast} from 'antd-mobile-rn'
 import {getPageParams} from "./tools/tool";
 import {isIphoneX} from "./tools/checkDevices";
 
+const Height = isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const Page = createStackNavigator(RouteConfig, {
 	initialRouteName: 'MainScreen',
 	headerMode: 'screen',
@@ -20,8 +24,11 @@ const Page = createStackNavigator(RouteConfig, {
 	mode: 'card',
 	navigationOptions: {
 		gesturesEnabled: true,
-		header: null,
+		header: () => (
+			<View style={{height: Height, backgroundColor: '#fff'}}/>
+		),
 	},
+
 	transitionConfig: (): any => ({
 		transitionSpec: {
 			duration: 350,
@@ -130,7 +137,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',
-		paddingTop: isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
 	},
 });
 

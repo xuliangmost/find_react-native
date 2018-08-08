@@ -26,10 +26,6 @@ const MainRoute = {
 		screen: WebView,
 		path: 'WebView/:id'
 	},
-	WebView_: {
-		screen: WebView,
-		path: 'WebView_/:id'
-	},
 	FindNote: {
 		screen: FindNote
 	},

@@ -40,15 +40,14 @@ window.webviewBridgecallRN = {
 * */
 
 export function resolveMessage (data: Object, navigation: Object) {
-  const routeName = navigation.state.routeName === 'WebView_'
-    ? 'WebView' : 'WebView_'
   if (data.name === 'call') {
     const type = data.type;
     if (type === 'openNewView') {
-      navigation.navigate(routeName, {
-        url: data.params.url,
-        callBack: data.callBack || null
-      })
+			navigation.push('WebView', {
+				url: data.params.url,
+				callBack: data.callBack || null
+			})
+			// navigation.popToTop()
     }
 
     if (type === 'scanCode') {
