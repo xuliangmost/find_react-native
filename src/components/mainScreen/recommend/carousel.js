@@ -25,11 +25,11 @@ class Carousels extends React.Component<Props, any> {
 				<ImageBackground
 					style={{height: '100%', borderRadius: 4}}
 					source={{uri: 'http://a.hiphotos.baidu.com/baike/pic/item/38dbb6fd5266d0167927ca029b2bd40735fa35d9.jpg'}}>
-					<View style={[styles.float_view, {bottom: 22}]}>
-						<Text style={styles.float_view_name}>{item.name}</Text>
+					<View style={[recommendStyles.float_view, {bottom: 22}]}>
+						<Text style={recommendStyles.float_view_name}>{item.name}</Text>
 					</View>
-					<View style={styles.float_view}>
-						<Text style={styles.float_view_total}>Vol.{item.total}</Text>
+					<View style={recommendStyles.float_view}>
+						<Text style={recommendStyles.float_view_total}>Vol.{item.total}</Text>
 					</View>
 				</ImageBackground>
 			</View>
@@ -40,9 +40,8 @@ class Carousels extends React.Component<Props, any> {
 	render () {
 		const {data} = this.state;
 		return (
-			<View style={styles.box}>
+			<View style={recommendStyles.box}>
 				<Carousel
-					layoutCardOffset={18}
 					ref={(c) => {
 						this._carousel = c;
 					}}
@@ -56,7 +55,7 @@ class Carousels extends React.Component<Props, any> {
 	}
 }
 
-const styles = StyleSheet.create({
+export const recommendStyles = StyleSheet.create({
 	box: {
 		height: 260,
 	},

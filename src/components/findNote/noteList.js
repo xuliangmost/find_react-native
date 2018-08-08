@@ -59,8 +59,8 @@ class NoteList extends React.Component<Props, any> {
 					<TouchableOpacity
 						onPress={() => onPress && onPress()}
 						style={{flex: 1, justifyContent: 'center'}} activeOpacity={.7}>
-						<Text style={styles.note_title}>{value.title}</Text>
-						<Text style={styles.note_description}>{value.content}</Text>
+						<Text numberOfLines={2} style={styles.note_title}>{value.title}</Text>
+						<Text numberOfLines={2} style={styles.note_description}>{value.content}</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={async () => {

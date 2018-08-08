@@ -45,6 +45,7 @@ const MainScreen = createBottomTabNavigator({
 	swipeEnabled: false,
 	creationPolicy: 'all',
 	animationEnabled: false, // 切换页面时是否有动画效果
+	initialRouteName: 'Found',
 	backBehavior: 'initialRoute', // 按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
 	tabBarOptions: {
 		activeTintColor: '#005bac', // 文字和图片选中颜色
