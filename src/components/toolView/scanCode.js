@@ -6,20 +6,29 @@ import {
 	Text
 } from 'react-native'
 import RefreshControls from "../common/refreshControls";
-import ChatHeader from '../common/chatHeader'
 
 type Props = {
 	navigation: Object
 }
-
+const list = [];
+for (let i = 0; i < 20; i++) {
+	list.push(i)
+}
 class ScanCode extends React.Component<Props, any> {
 
 	render () {
 		const {navigation} = this.props;
 		return (
 			<View style={{flex: 1}}>
-				<ChatHeader value renderRight={() => <Text>right</Text>} back navigation={navigation} title={'测试下拉刷新'}/>
-				<RefreshControls/>
+				<RefreshControls>
+					{
+						list.map(ele => {
+							return (
+								<Text style={styles.text} key={ele}>{ele}</Text>
+							)
+						})
+					}
+				</RefreshControls>
 			</View>
 		)
 	}
@@ -28,6 +37,7 @@ class ScanCode extends React.Component<Props, any> {
 const styles = StyleSheet.create({
 	rectangleContainer: {},
 	rectangle: {},
-	camera: {}
+	camera: {},
+	text: {height: 80, textAlign: 'center'}
 });
 export default ScanCode

@@ -2,105 +2,134 @@
 import * as React from 'react'
 import {
   View,
-  Text,
   StyleSheet,
   PanResponder,
+	ScrollView,
 } from 'react-native'
 
 import * as Animatable from 'react-native-animatable'
 
-type Prop = {}
+type Prop = {
+	children?: any
+}
 
 class RefreshControls extends React.Component<Prop, any> {
-  _view: Object
-  _panResponder: Object
-  _scrollY: number
-  _viewY: number
-  duration: boolean
-  state = {
-    duration: 0,
-    pageScrollY: 0
-  }
+	_panResponder: Object;
+	scroll_: any;
+	responderEnd: any;
+	_view: Object;
+	_scrollY: number;
+	pullable: boolean;
+	state = {
+		duration: 0,
+		scrollEnabled: true,//是否能滑动
+		atTop: true,//是否处于顶部
+		refreshing: false
+	};
 
-  componentWillMount () {
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: this.onStartShouldSetPanResponder,
-      onMoveShouldSetPanResponder: this.onMoveShouldSetPanResponder,
-      onPanResponderGrant: this.onPanResponderGrant,
-      onPanResponderMove: this.onPanResponderMove,
-      onPanResponderRelease: this.onPanResponderEnd,
-      onPanResponderTerminate: this.onPanResponderEnd,
-    });
-    this._scrollY = 0;//中间值
-    this._viewY = 0;
-    this.duration = false
-  }
+	componentWillMount () {
+		this._panResponder = PanResponder.create({
+			onStartShouldSetPanResponder: this.onStartShouldSetPanResponder,
+			onMoveShouldSetPanResponder: this.onShouldSetPanResponder,
+			onPanResponderGrant: this.onPanResponderGrant,
+			onPanResponderMove: this.onPanResponderMove,
+			onPanResponderRelease: this.onPanResponderEnd,
+		});
+		this._scrollY = 0;//中间值
 
-  onStartShouldSetPanResponder = () => {
-    return true
-  };
+		this.pullable = false;//处于下拉状态
+	}
 
-  onMoveShouldSetPanResponder = () => {
-    return true
-  };
+	onStartShouldSetPanResponder = () => {
+		if (this.state.atTop) {
+			this.pullable = true;
+			this.setState({scrollEnabled: false})
+		} else {
+			this.pullable = false;
+			this.setState({scrollEnabled: true})
+		}
+	};
+
+	onShouldSetPanResponder = (e: Object, gesture: Object) => {
+		// console.log(this.state.atTop && isDownGesture(gesture.dx, gesture.dy));
+		// if (this.state.atTop && isDownGesture(gesture.dx, gesture.dy)) {
+		// 	this.pullable = true;
+		// 	this.setState({scrollEnabled: false});
+		// 	return true;
+		// } else {
+		// 	this.pullable = false;
+		// 	this.setState({scrollEnabled: true});
+		// 	return false;
+		// }
+		return this.pullable
+	};
 
   onPanResponderGrant = (e: Object, gestureState: Object) => {
-    // this._scrollY = 0;
+		//开始手势操作，也可以说按下去。给用户一些视觉反馈
+		// this._scrollY = 0;
   };
 
   onPanResponderMove = (e: Object, gestureState: Object) => {
-    let y = gestureState.dy + this._viewY;
-    y = y > 0 ? y / 5 : y;
-    this._scrollY = y;
-    // this._view.setNativeProps({style: {top: y}});
-    this.setState({pageScrollY: y});
-    console.log(y)
+		this._view.setNativeProps({style: {marginTop: gestureState.dy / 4}});
+		this._scrollY = gestureState.dy;
+		console.log('---', gestureState.dy)
+		// this._view.setNativeProps({style: {marginTop: y}});
+		// console.log(y)
   };
 
   onPanResponderEnd = (e: Object, gestureState: Object) => {
-    if (this._scrollY > 0) {
-      this.duration = true
-      // this._view.setNativeProps({style: {top: 0}});
-      this.setState({pageScrollY: 0});
-      this._viewY = 0
-    } else {
-      this._viewY = this._scrollY;
-    }
-    this._scrollY = 0;
+		// this.responderEnd && clearTimeout(this.responderEnd);
+		// this.responderEnd = setTimeout(() => {
+		// 	if (this.pullable) {
+		// 		this.pullable = false;
+		// 		console.log('stop');
+		// 		this.setState({scrollEnabled: true});
+		// 		this._view.setNativeProps({style: {marginTop: 0}});
+		// 	}
+		// }, 20);
+		if (this.pullable) {
+			this._view.setNativeProps({style: {marginTop: 0}});
+			this.scroll_.scrollTo({x: 0, y: this._scrollY * -1});
+			this.pullable = false;
+		}
   };
 
   render () {
-    const {pageScrollY} = this.state;
     return (
       <View
         style={[styles.refresh_container]}
       >
-        <View
-          // easing={'ease-out-cubic'}
-          {...this._panResponder.panHandlers}
-          style={[{top: pageScrollY}, styles.move_container]}
-          ref={(view) => {
-            this._view = view;
-          }}
-        >
-          <Text style={styles.text}>{1}</Text>
-          <Text style={styles.text}>2</Text>
-          <Text style={styles.text}>3</Text>
-          <Text style={styles.text}>4</Text>
-          <Text style={styles.text}>5</Text>
+				<Animatable.View
+					transition={'marginTop'}
+					easing={'ease-out-cubic'}
+					{...this._panResponder.panHandlers}
+					ref={_view => this._view = _view}
+				>
 
-          <Text style={styles.text}>1</Text>
-          <Text style={styles.text}>2</Text>
-          <Text style={styles.text}>3</Text>
-          <Text style={styles.text}>4</Text>
-          <Text style={styles.text}>5</Text>
+					{/*	refreshControl={
+					<RefreshControl
+						refreshing={this.state.refreshing}
+						onMoveShouldSetResponder={e => {
+							console.log(e.nativeEvent)
+						}}
+						onRefresh={() => {
 
-          <Text style={styles.text}>1</Text>
-          <Text style={styles.text}>2</Text>
-          <Text style={styles.text}>3</Text>
-          <Text style={styles.text}>4</Text>
-          <Text style={styles.text}>5</Text>
-        </View>
+						}
+						}
+					/>
+				}*/}
+
+					<ScrollView
+						ref={scroll => this.scroll_ = scroll}
+						scrollEnabled={this.state.scrollEnabled}
+						onScroll={event => {
+							console.log(event.nativeEvent.contentOffset.y)
+							this.setState({atTop: event.nativeEvent.contentOffset.y === 0})
+						}}
+					>
+						{this.props.children}
+					</ScrollView>
+				</Animatable.View>
       </View>
     )
   }
@@ -111,11 +140,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   },
-  move_container: {
-    position: 'absolute',
-    width: '100%'
-  },
-  text: {height: 80, textAlign: 'center'}
-})
+});
+
+function isDownGesture (dx, dy: number) {
+
+	return dy > 0
+}
 
 export default RefreshControls

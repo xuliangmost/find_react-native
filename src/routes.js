@@ -17,6 +17,8 @@ import {isIphoneX} from "./tools/checkDevices";
 const Height = isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const Page = createStackNavigator(RouteConfig, {
 	initialRouteName: 'MainScreen',
+	// initialRouteName: 'ScanCode',
+
 	headerMode: 'screen',
 	initialRouteParams: {
 		title: ''

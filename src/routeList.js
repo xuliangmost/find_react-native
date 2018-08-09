@@ -6,6 +6,7 @@ import Login from './components/login'
 import Music from './components/music/home/index'
 import WebView from './components/_webView'
 import FindNote from "./components/findNote";
+import ScanCode from "./components/toolView/scanCode";
 
 import EditAndAddNote from "./components/findNote/editAndAddNote";
 
@@ -31,7 +32,10 @@ const MainRoute = {
 	},
 	EditAndAddNote: {
 		screen: EditAndAddNote
-	}
+	},
+	ScanCode: {
+		screen: ScanCode
+	},
 };
 
 const MusicRoute = {
