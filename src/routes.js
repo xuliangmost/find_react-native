@@ -13,6 +13,7 @@ import {connect} from 'react-redux'
 import {Toast} from 'antd-mobile-rn'
 import {getPageParams} from "./tools/tool";
 import {isIphoneX} from "./tools/checkDevices";
+import Share from "./components/common/share";
 
 const Height = isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const Page = createStackNavigator(RouteConfig, {
@@ -28,7 +29,7 @@ const Page = createStackNavigator(RouteConfig, {
 		gesturesEnabled: true,
 		header: () => (
 			<View style={{height: Height, backgroundColor: '#fff'}}/>
-		),
+		)
 	},
 
 	transitionConfig: (): any => ({
@@ -93,10 +94,6 @@ class App extends Component<Props, any> {
 		};
 	}
 
-	componentWillReceiveProps (nextProps: Object) {
-
-	}
-
 	componentDidMount () {
 		Linking.getInitialURL().then((url) => {
 			if (url) {
@@ -130,6 +127,7 @@ class App extends Component<Props, any> {
 					backgroundColor={'transparent'}
 					animated/>
 				<MainApp/>
+				<Share/>
 			</View>
 		);
 	}

@@ -1,7 +1,7 @@
 /** @flow*/
 import {combineReducers} from 'redux'
-import * as homePageReducer from './components/mainScreen/recommend/reducer'
+import * as commonReducer from './components/common/reducer'
 
 export default combineReducers(Object.assign({}, {
-  ...homePageReducer,
+	...commonReducer,
 }))

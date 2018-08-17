@@ -13,20 +13,29 @@ type Props = {}
 
 class SubNav extends React.Component<Props, any> {
 
-	_renderItem = ({item}) => (
-		<List item={item}/>
+	_scroll: any;
+
+	_renderItem = ({item, index}) => (
+		<List scrollToElement={this.scrollToElement} data={item} index={index}/>
 	);
+
+	scrollToElement = (index: number) => {
+		this._scroll && this._scroll.scrollToIndex({index: index, animated: true, viewPosition: .5});
+	};
 
 	render () {
 		return (
 			<View>
 				<FlatList
+					ref={scroll => this._scroll = scroll}
 					data={[{id: '1'}, {id: '2'}, {id: '3'}, {id: '4'}, {id: '5'}, {id: '6'}]}
 					extraData={this.state}
 					horizontal={true}
 					renderItem={this._renderItem}
 					keyExtractor={(item, index) => item.id}
 					showsHorizontalScrollIndicator={false}
+					snapToAlignment={'center'}
+					snapToInterval={80}
 				/>
 			</View>
 		)
@@ -34,12 +43,44 @@ class SubNav extends React.Component<Props, any> {
 
 }
 
-type ListProps = {}
+type ListProps = {
+	index: number,
+	data: Object,
+	scrollToElement: Function
+}
 
 class List extends React.Component<ListProps, any> {
+
+	componentWillMount () {
+
+	}
+
+	state = {
+		index: this.props.index,
+		data: this.props.data,
+	};
+
+	componentWillReceiveProps (nextProps) {
+		if (this.props.index !== nextProps.index) {
+			this.setState({
+				index: this.props.index,
+			})
+		}
+		if (this.props.data !== nextProps.data) {
+			this.setState({
+				data: this.props.data,
+			})
+		}
+	}
+
 	render () {
+		const {index} = this.state;
 		return (
-			<TouchableOpacity activeOpacity={.7}>
+			<TouchableOpacity
+				onPress={() => {
+					this.props.scrollToElement(index)
+				}}
+				activeOpacity={.7}>
 				<View style={styles.list_container}>
 					<Image
 						source={{uri: 'http://img4.imgtn.bdimg.com/it/u=574338445,611051433&fm=200&gp=0.jpg'}}

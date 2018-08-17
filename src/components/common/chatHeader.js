@@ -96,8 +96,7 @@ class ChatHeader extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
 	container_chat: {
-		paddingTop: isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
-		backgroundColor: '#fff',
+		backgroundColor: 'red',
 		borderBottomWidth:.7,
 		borderColor:'#C0C0C0'
 	},

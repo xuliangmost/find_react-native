@@ -105,20 +105,6 @@ class RefreshControls extends React.Component<Prop, any> {
 					{...this._panResponder.panHandlers}
 					ref={_view => this._view = _view}
 				>
-
-					{/*	refreshControl={
-					<RefreshControl
-						refreshing={this.state.refreshing}
-						onMoveShouldSetResponder={e => {
-							console.log(e.nativeEvent)
-						}}
-						onRefresh={() => {
-
-						}
-						}
-					/>
-				}*/}
-
 					<ScrollView
 						ref={scroll => this.scroll_ = scroll}
 						scrollEnabled={this.state.scrollEnabled}

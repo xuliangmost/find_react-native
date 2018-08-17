@@ -6,7 +6,7 @@ import {Provider} from 'react-redux'
 import {createStore, applyMiddleware, compose} from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import reducer from './src/reducer'
-
+import { YellowBox } from 'react-native';
 
 function configureStore (initialState: Object): Function {
   const enhancer = compose(
@@ -25,3 +25,8 @@ const Page = () => (
 );
 export default Page
 export {store}
+
+
+
+
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);

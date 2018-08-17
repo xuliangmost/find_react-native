@@ -8,6 +8,8 @@ import MessageList from './messageList'
 import {getMessageList} from "./reuestAction";
 import {Toast} from 'antd-mobile-rn'
 import ChatView from "../chatView";
+import {store} from "../../../../App";
+import {OpenShare} from "../../../tools/shareAPI";
 
 type Props = {
 	navigation: Object,
@@ -64,6 +66,17 @@ class Message extends React.Component<Props, any> {
 				>
 					<Text style={Styles.btn}>
 						Music
+					</Text>
+				</TouchableOpacity>
+
+				<TouchableOpacity
+					style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
+					onPress={() => {
+						OpenShare()
+					}}
+				>
+					<Text style={Styles.btn}>
+						Share
 					</Text>
 				</TouchableOpacity>
 
