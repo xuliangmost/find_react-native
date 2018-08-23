@@ -21,11 +21,6 @@ type Props = {
 class TabBar extends React.Component<Props, any> {
 
 	renderItem = (route: Object, index: number) => {
-
-		if (route.type) {
-			return this.renderCenterButton()
-		}
-
 		const {
 			navigation,
 			jumpTo,
@@ -53,15 +48,6 @@ class TabBar extends React.Component<Props, any> {
 				</View>
 			</TouchableOpacity>
 		);
-	};
-
-	renderCenterButton = () => {
-		return (
-			<Image
-				key={'btn'}
-				style={styles.tabAdd}
-				source={require('./images/add.png')}/>
-		)
 	};
 
 	render () {

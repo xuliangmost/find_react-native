@@ -7,8 +7,7 @@ import * as React from 'react'
 import {createBottomTabNavigator} from 'react-navigation'
 import Recommends from './recommend'
 import Found from './found'
-import {Image, Platform} from 'react-native'
-import {isIphoneX} from "../../tools/checkDevices";
+import {Image} from 'react-native'
 import Mine from './mine'
 import Community from './community'
 import TabBarComponent from './tabBarCustomize'
@@ -23,6 +22,7 @@ const MainScreen = createBottomTabNavigator({
 	},
 	Found: {
 		screen: Found,
+		path: 'mainScreen/found',
 		navigationOptions: {
 			tabBarLabel: '发现',
 			tabBarIcon: ({tintColor}) => (<Image source={require('./images/found.png')} style={[{tintColor: tintColor}, {height: 24, width: 24}]}/>),
@@ -44,7 +44,8 @@ const MainScreen = createBottomTabNavigator({
 	},
 }, {
 	swipeEnabled: false,
-	creationPolicy: 'all',
+	// creationPolicy: 'all',
+	lazy: false,
 	animationEnabled: false, // 切换页面时是否有动画效果
 	initialRouteName: 'Recommend',
 	backBehavior: 'initialRoute', // 按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
@@ -52,7 +53,6 @@ const MainScreen = createBottomTabNavigator({
 	tabBarComponent: props =>
 		<TabBarComponent
 			{...props}
-			style={{borderTopColor: '#605F60'}}
 		/>,
 
 	tabBarOptions: {

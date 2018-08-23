@@ -13,7 +13,7 @@ import EditAndAddNote from "./components/findNote/editAndAddNote";
 const MainRoute = {
 	MainScreen: {
 		screen: MainScreen,
-		path: 'mainScreen/:id/name'
+		path: 'mainScreen'
 	},
 	Login: {
 		screen: Login,

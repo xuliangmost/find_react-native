@@ -11,10 +11,19 @@ import {
 import ChatHeader from '../common/chatHeader'
 import NoteList from './noteList'
 import {localStorageS} from "../../tools/localStorage";
-
+import {StackActions, NavigationActions} from 'react-navigation'
 type Props = {
 	navigation: Object
 }
+
+const resetAction = StackActions.reset({
+	index: 0,
+	actions: [NavigationActions.navigate({routeName: 'MainScreen'})],
+});
+
+const setParamsAction = NavigationActions.init({
+	routeName: 'Found',
+});
 
 class FindNote extends React.Component<Props, any> {
 	state = {
@@ -63,6 +72,10 @@ class FindNote extends React.Component<Props, any> {
 					value
 					renderRight={() => (
 						<TouchableOpacity
+							onPress={() => {
+								// this.props.navigation.navigate('Found');
+								this.props.navigation.dispatch(resetAction)
+							}}
 							activeOpacity={.7}>
 							<Text style={styles.header_edit}>+</Text>
 						</TouchableOpacity>

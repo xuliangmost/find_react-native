@@ -62,7 +62,7 @@ class Message extends React.Component<Props, any> {
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
-					onPress={() => navigation.navigate('Music', {direction: 'X'})}
+					onPress={() => navigation.replace('Music', {direction: 'X'})}
 				>
 					<Text style={Styles.btn}>
 						Music
@@ -73,6 +73,18 @@ class Message extends React.Component<Props, any> {
 					style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
 					onPress={() => {
 						OpenShare()
+					}}
+				>
+					<Text style={Styles.btn}>
+						Share
+					</Text>
+				</TouchableOpacity>
+
+				<TouchableOpacity
+					style={{width: '50%', backgroundColor: '#B1E7FF', alignSelf: 'center'}}
+					onPress={() => {
+						console.log(this.props)
+						this.props.navigation.navigate('Found')
 					}}
 				>
 					<Text style={Styles.btn}>
