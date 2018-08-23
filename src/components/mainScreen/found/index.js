@@ -22,10 +22,6 @@ type Props = {
 
 class Found extends React.Component<Props> {
 
-	componentDidMount () {
-		console.log(this.props.navigation.isFocused())
-	}
-
 	render () {
 		const {navigation} = this.props;
 		return (
