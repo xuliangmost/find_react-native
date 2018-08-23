@@ -11,6 +11,7 @@ import {Image, Platform} from 'react-native'
 import {isIphoneX} from "../../tools/checkDevices";
 import Mine from './mine'
 import Community from './community'
+import TabBarComponent from './tabBarCustomize'
 
 const MainScreen = createBottomTabNavigator({
 	Recommend: {
@@ -47,6 +48,13 @@ const MainScreen = createBottomTabNavigator({
 	animationEnabled: false, // 切换页面时是否有动画效果
 	initialRouteName: 'Recommend',
 	backBehavior: 'initialRoute', // 按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
+
+	tabBarComponent: props =>
+		<TabBarComponent
+			{...props}
+			style={{borderTopColor: '#605F60'}}
+		/>,
+
 	tabBarOptions: {
 		activeTintColor: '#005bac', // 文字和图片选中颜色
 		inactiveTintColor: '#afafaf', // 文字和图片未选中颜色
@@ -54,17 +62,15 @@ const MainScreen = createBottomTabNavigator({
 		indicatorStyle: {
 			height: 0  // 如TabBar下面显示有一条线，可以设高度为0后隐藏
 		},
-		style: {//这个style就是控制下面tabBar的样式
-			backgroundColor: '#fff', // TabBar 背景色
-			height: 50,
-			borderTopWidth: 0.5,
-			borderTopColor: '#a8a8a8',
-			marginBottom: isIphoneX() ? -22 : 0
-		},
-		labelStyle: {
-			fontSize: 10,
-			marginTop: (Platform.OS === 'ios') ? -2 : -1,
-		},
+		// style: {//这个style就是控制下面tabBar的样式
+		// 	backgroundColor: '#fff', // TabBar 背景色
+		// 	borderTopWidth: 0.5,
+		// 	borderTopColor: '#a8a8a8',
+		// 	marginBottom: isIphoneX() ? -22 : 0
+		// },
+		// labelStyle: {
+		// 	fontSize: 10,
+		// },
 	},
 });
 
