@@ -4,16 +4,17 @@
 
 import React, {Component} from 'react';
 import {
-	Animated, AppState, Easing, Linking, Platform, StatusBar, StyleSheet,
-	View, Text
+	Animated, AppState, Easing,
+	Linking, Platform, StatusBar, StyleSheet,
+	View, Text,
 } from 'react-native';
 import {createStackNavigator} from 'react-navigation'
 import {RouteConfig} from './routeList'
 import {connect} from 'react-redux'
 import {Toast} from 'antd-mobile-rn'
-import {getPageParams} from "./tools/tool";
-import {isIphoneX} from "./tools/checkDevices";
-import Share from "./components/common/share";
+import {getPageParams} from "./tools/tool"
+import {isIphoneX} from "./tools/checkDevices"
+import Share from "./components/common/share"
 
 const Height = isIphoneX() ? 44 : Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const Page = createStackNavigator(RouteConfig, {
@@ -86,7 +87,6 @@ const MainApp = () => <Page uriPrefix={prefix}/>;
 
 class App extends Component<Props, any> {
 	setState: Function;
-
 	constructor (props) {
 		super(props);
 		this.state = {
@@ -95,6 +95,7 @@ class App extends Component<Props, any> {
 	}
 
 	componentDidMount () {
+
 		Linking.getInitialURL().then((url) => {
 			if (url) {
 				Toast.info(`${JSON.stringify(getPageParams(url))}`, 4);
@@ -102,7 +103,6 @@ class App extends Component<Props, any> {
 		}).catch(err => console.error('An error occurred', err));
 		AppState.addEventListener('change', this._handleAppStateChange);
 	}
-
 
 	componentWillUnmount () {
 		AppState.removeEventListener('change', this._handleAppStateChange);

@@ -8,6 +8,7 @@ import {
 	Text,
 	Image
 } from 'react-native'
+import {isIphoneX} from "../../tools/checkDevices";
 
 type Props = {
 	navigation: Object,
@@ -73,11 +74,12 @@ const styles = {
 		borderTopWidth: StyleSheet.hairlineWidth,
 		borderTopColor: '#ddd',
 		width: '100%',
-		backgroundColor: 'white',
+		backgroundColor: '#fff',
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
-		paddingVertical: 4
+		paddingBottom: isIphoneX() ? 22 : 0,
+		paddingTop: 2
 	},
 	tabItem: {
 		width: SCALE(100),
